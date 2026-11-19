@@ -1,0 +1,14 @@
+# Python 3.9.6
+duckdb==1.4.5
+jellyfish==1.2.1
+textdistance==4.6.3
+numpy==2.0.2
+pandas==2.3.3
+pyarrow==21.0.0
+scikit-learn==1.6.1
+xgboost==2.1.4
+torch==2.8.0
+gensim==4.4.0
+transformers==4.57.6
+postal==1.1.11        # needs the libpostal C library (see README)
+ipykernel==6.31.0

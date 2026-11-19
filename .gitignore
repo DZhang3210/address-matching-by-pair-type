@@ -1,0 +1,11 @@
+# Rebuilt by the notebooks (see README)
+pipeline/Data/
+checkpoints/
+classical/features/
+
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.DS_Store
+.env
+venv/
