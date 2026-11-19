@@ -1,6 +1,6 @@
 # Address matching by pair type: classical models vs. neural matchers
 
-Code and saved model outputs for the paper *(title, link)*. Given two address strings, each model predicts whether they refer to the same location. We compare classical models on hand-segmented addresses (logistic regression, random forest and XGBoost on 23 string-similarity features) with four neural models that read the raw strings (a character-level siamese BiLSTM, ESIM, and DistilBERT bi- and cross-encoders). All of them are trained and tested on the same splits of real cross-source address pairs from Connecticut, built from Overture Maps Places and Foursquare Open Source Places, and every model is scored separately on each pair type. The repository holds only what the paper uses: the data pipeline, the model code, and one notebook that reproduces every table.
+Code and saved model outputs for the paper *(title, link)*. Trained weights: [zhangdav/address-matching-by-pair-type](https://huggingface.co/zhangdav/address-matching-by-pair-type) (models); the pairs: [datasets/zhangdav/address-matching-by-pair-type](https://huggingface.co/datasets/zhangdav/address-matching-by-pair-type). Given two address strings, each model predicts whether they refer to the same location. We compare classical models on hand-segmented addresses (logistic regression, random forest and XGBoost on 23 string-similarity features) with four neural models that read the raw strings (a character-level siamese BiLSTM, ESIM, and DistilBERT bi- and cross-encoders). All of them are trained and tested on the same splits of real cross-source address pairs from Connecticut, built from Overture Maps Places and Foursquare Open Source Places, and every model is scored separately on each pair type. The repository holds only what the paper uses: the data pipeline, the model code, and one notebook that reproduces every table.
 
 ## Setup
 
@@ -16,11 +16,22 @@ pip install -r requirements.txt
 
 Run every notebook from its own folder (each one adds the repository root to `sys.path`).
 
+## Using the trained models
+
+All 23 neural runs are on Hugging Face as safetensors; `helpers/released.py` downloads and builds one:
+
+```python
+from helpers.released import load_released
+model, collate = load_released("distilbert", "cross", seed=0)   # or ("esim", "rand_mc2", s), ("siamese", "mean", 0), ...
+batch = collate([("12 ELM ST", "12 ELM STREET", 1)])
+probability = torch.sigmoid(model(*batch[:-1]))
+```
+
 ## Reproducing the tables (no retraining)
 
 The val/test probabilities of every neural run are committed in `predictions/`, so the tables need only the pair files:
 
-1. Rebuild the pairs: `pipeline/01` → `04` (below).
+1. Get the pairs: download the [dataset](https://huggingface.co/datasets/zhangdav/address-matching-by-pair-type) into `pipeline/Data/` as `ct_pairs_{train,val,test}_case2s.parquet`, or rebuild them with `pipeline/01` → `04` (below).
 2. Run `results/paper_tables.ipynb`. It refits the three classical models from the similarity features (deterministic; the first run builds the feature cache in a few minutes) and reads every neural run from `predictions/`.
 
 ## Run order (full rebuild)
@@ -79,7 +90,8 @@ The cosine check quoted in the ESIM section (same-street rare house numbers vs r
 ## Layout
 
 ```
-helpers/      pairs (load_pairs, add_number_street), similarity features, slice tables, paths, case 2s checks
+helpers/      pairs (load_pairs, add_number_street), similarity features, slice tables, paths, case 2s checks,
+              released.py (load the Hugging Face weights)
 pipeline/     data notebooks 01–04; Data/ (git-ignored)
 classical/    LogReg / random forest / XGBoost; features/ cache (git-ignored)
 siamese/      model.py, training.py (the training protocol shared by every neural model), train.ipynb
@@ -92,7 +104,7 @@ results/      paper_tables.ipynb
 
 ## Data licences and attribution
 
-This repository contains no source data: the pair files are rebuilt from the public releases by `pipeline/`. Pairs built with it carry the source licences:
+This repository contains no source data: the pair files are rebuilt from the public releases by `pipeline/`, or downloaded from the Hugging Face dataset (which ships Foursquare's `NOTICE.txt` and the Apache 2.0 licence). The pairs carry the source licences:
 
 - **Overture Maps Places** (release `2026-09-23.1`) is published under [CDLA Permissive 2.0](https://cdla.dev/permissive-2-0/) and Apache 2.0, depending on the source of each record ([Overture attribution](https://docs.overturemaps.org/attribution)). Side A of every pair is the address Overture publishes, mostly from Meta and Microsoft: *Data from Meta. Available under CDLA Permissive 2.0.* *Data from Microsoft. Available under CDLA Permissive 2.0.* Overture's suggested citation for publications: *Overture Maps Foundation, overturemaps.org* (accessed 2026-09).
 - **Overture bridge files** (GERS ID → source record IDs, same release): Overture's documentation states no separate licence for them.
