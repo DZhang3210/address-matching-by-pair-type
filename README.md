@@ -1,6 +1,6 @@
 # Address matching by pair type: classical models vs. neural matchers
 
-Code and saved model outputs for the paper *(title, link)*. Trained weights: [zhangdav/address-matching-by-pair-type](https://huggingface.co/zhangdav/address-matching-by-pair-type) (models); the pairs: [datasets/zhangdav/address-matching-by-pair-type](https://huggingface.co/datasets/zhangdav/address-matching-by-pair-type). Given two address strings, each model predicts whether they refer to the same location. We compare classical models on hand-segmented addresses (logistic regression, random forest and XGBoost on 23 string-similarity features) with four neural models that read the raw strings (a character-level siamese BiLSTM, ESIM, and DistilBERT bi- and cross-encoders). All of them are trained and tested on the same splits of real cross-source address pairs from Connecticut, built from Overture Maps Places and Foursquare Open Source Places, and every model is scored separately on each pair type. The repository holds only what the paper uses: the data pipeline, the model code, and one notebook that reproduces every table.
+Code and saved model outputs for the paper [*Address Matching by Pair Type: Segmented Classical Models versus Raw-String Neural Matchers*](paper/address-matching-by-pair-type.pdf) (PDF in `paper/`). Trained weights: [zhangdav/address-matching-by-pair-type](https://huggingface.co/zhangdav/address-matching-by-pair-type) (models); the pairs: [datasets/zhangdav/address-matching-by-pair-type](https://huggingface.co/datasets/zhangdav/address-matching-by-pair-type). Given two address strings, each model predicts whether they refer to the same location. We compare classical models on hand-segmented addresses (logistic regression, random forest and XGBoost on 23 string-similarity features) with four neural models that read the raw strings (a character-level siamese BiLSTM, ESIM, and DistilBERT bi- and cross-encoders). All of them are trained and tested on the same splits of real cross-source address pairs from Connecticut, built from Overture Maps Places and Foursquare Open Source Places, and every model is scored separately on each pair type. The repository holds only what the paper uses: the data pipeline, the model code, and one notebook that reproduces every table.
 
 ## Setup
 
@@ -100,6 +100,7 @@ distilbert/   model.py, training.py, train_bi.ipynb, train_cross.ipynb
 predictions/  per run: probs_{val,test}_seed_{s}.npy + history_seed_{s}.csv; rare_number_group_{val,test}.npy
 checkpoints/  trained weights and word-vector tables (git-ignored)
 results/      paper_tables.ipynb
+paper/        the paper (PDF)
 ```
 
 ## Data licences and attribution
@@ -116,4 +117,11 @@ MIT (see `LICENSE`).
 
 ## Citation
 
-*(paper reference)*
+```bibtex
+@misc{zhang2026addressmatching,
+  author = {Zhang, David},
+  title  = {Address Matching by Pair Type: Segmented Classical Models versus Raw-String Neural Matchers},
+  year   = {2026},
+  howpublished = {\url{https://github.com/DZhang3210/address-matching-by-pair-type}}
+}
+```
