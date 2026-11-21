@@ -17,8 +17,6 @@ The kept model of each family on the test set (paper, Table 15). Percent of each
 
 The models differ most on matches where one side has no house number (164 test pairs): the random forest and XGBoost find 94–96% of them, the neural models 63–76%. With those matches set aside, every neural model ranks non-identical matches against look-alike streets about as well as XGBoost (paper, Table 13).
 
-**Correction.** An earlier version of this repository and the paper built the different-number pairs with an error: the house-number check read the partner's Overture address instead of the Foursquare address the pair uses, so about 2% of these non-matches had a house number on one side only (`74 BEACH RD` / `BEACH RD`), the same pattern as some matches. The pipeline now requires a house number on both sides of the pair (`pipeline/02_build_pairs.ipynb`, §6), the pairs were rebuilt and every model retrained; all results here are from the corrected data. Appendix B of the paper describes the error and what it changed. The earlier outputs are in the git history (commit `7be57d6`).
-
 ## Setup
 
 Python 3.9 (the paper's runs used 3.9.6).
