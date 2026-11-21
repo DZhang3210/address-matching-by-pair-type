@@ -1,12 +1,12 @@
 """Load the released weights (Hugging Face: zhangdav/address-matching-by-pair-type).
 
 Each run is a folder <family>/<variant>/seed_<s>/ holding model.safetensors and config.json:
-  siamese/{mean,max}/seed_0
+  siamese/{mean,max}/seed_{0,1,2}
   esim/{mc2,mc1,ft_mc1,rand_mc2,stack_mc1}/seed_{0,1,2}
   distilbert/{bi,cross}/seed_{0,1,2}
 
     from helpers.released import load_released
-    model, collate = load_released("esim", "rand_mc2", seed=0)          # downloads the run
+    model, collate = load_released("esim", "ft_mc1", seed=0)           # downloads the run
     loader = DataLoader(PairDataset(df, labels), batch_size=64, collate_fn=collate)
 
 `collate` turns (address_a, address_b, label) samples into the model's inputs; the model returns logits

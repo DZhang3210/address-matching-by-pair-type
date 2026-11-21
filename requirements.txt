@@ -14,3 +14,4 @@ safetensors==0.7.0
 huggingface_hub==0.36.2
 postal==1.1.11        # needs the libpostal C library (see README)
 ipykernel==6.31.0
+matplotlib==3.9.4

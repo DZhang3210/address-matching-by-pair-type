@@ -29,8 +29,8 @@ SEEDS = [0, 1, 2]
 SETTINGS = {
     "mc2":       "esim_mc2",        # word2vec min_count=2 (the reproduction)
     "mc1":       "esim_mc1",        # word2vec min_count=1
-    "ft_mc1":    "esim_ft_mc1",     # fastText min_count=1
-    "rand_mc2":  "esim_rand_mc2",   # word2vec mc2 + a fixed random row per dropped token (the kept setting)
+    "ft_mc1":    "esim_ft_mc1",     # fastText min_count=1 (the kept setting)
+    "rand_mc2":  "esim_rand_mc2",   # word2vec mc2 + a fixed random row per dropped token
     "stack_mc1": "esim_stack_mc1",  # [word2vec mc1; fastText mc1]
 }
 # vocab that defines the rare-number group

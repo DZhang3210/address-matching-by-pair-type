@@ -1,0 +1,14 @@
+# Table B1, earlier version (v1, commit 7be57d6): % of the 164 test matches with a house number on one side only found at 0.5.
+# Computed from the v1 pairs and v1 saved predictions before they were removed; results/paper_tables.ipynb reads it.
+model,seed,missing_number_matches_found_pct
+XGBoost,0,22.5609756097561
+"Siamese BiLSTM, mean pooling",0,32.926829268292686
+"ESIM, fastText",0,12.804878048780488
+"ESIM, fastText",1,14.02439024390244
+"ESIM, fastText",2,14.02439024390244
+DistilBERT bi-encoder,0,29.268292682926827
+DistilBERT bi-encoder,1,32.31707317073171
+DistilBERT bi-encoder,2,35.97560975609756
+DistilBERT cross-encoder,0,13.414634146341465
+DistilBERT cross-encoder,1,15.24390243902439
+DistilBERT cross-encoder,2,19.51219512195122
